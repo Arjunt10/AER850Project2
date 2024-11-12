@@ -10,18 +10,16 @@ Arjun Tripathi
 AER850 - Project 2
 """
 
-"Step 1: Data Processing"
+"STEP 1: Data Processing"
 
 "Import Librarires"
 
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-from tenorflow import keras
-from keras import layers
-from keras import models
-from keras import imagedatasetfromdirectory
-from keras import ImageDataGenerator
+from tensorflow import keras
+from tensorflow.keras import layers, models
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 "Define Input Image Shape"
 Img_width = 500
@@ -29,8 +27,8 @@ Img_height = 500
 Img_channel = 3
 
 "Define Train and Validation Data Directory"
-Train_direct = "Project 2\AER850Project2\Project 2 Data\Data\train"
-Validation_direct = "Project 2\AER850Project2\Project 2 Data\Data\valid"
+Train_direct = r"Project 2 Data\Data\train"
+Validation_direct = r"Project 2 Data\Data\valid"
 
 "Data Augmentation For Train & Validation"
 
@@ -43,7 +41,7 @@ Train_datagenerator = ImageDataGenerator (
 
 Validation_datagenerator = ImageDataGenerator (rescale = 1./255)
 
-"Train & Validation Image Generators"
+"Applying Augmentation to Tran & Validation datasets"
 
 Train_generator = Train_datagenerator.flow_from_directory (
     
@@ -60,6 +58,10 @@ Validation_generator = Validation_datagenerator.flow_from_directory (
     batch_size = 32,
     class_mode = 'categorical'   
     )
+
+"STEP 2: Neural Network Architecture Design"
+
+
 
 
 
