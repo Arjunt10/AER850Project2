@@ -109,12 +109,12 @@ model_trained = model.fit(
     )
 
 "STEP 4: Model Evaluation"
-valid_loss, valid_accuracy = model.evaluate(Validation_generator)
+val_loss, val_accuracy = model.evaluate(Validation_generator)
 
 accuracy = model_trained.history['accuracy']
-validation_accuracy = model_trained.history['valid_accuracy']
+validation_accuracy = model_trained.history['val_accuracy']
 loss = model_trained.history ['loss']
-validation_loss = model_trained.history ['valid_loss']
+validation_loss = model_trained.history ['val_loss']
 
 
 "Plotting the Training vs Validation Accuracy Data"
@@ -137,4 +137,4 @@ plt.legend()
 
 plt.show()
 
-model.save ("Initial Model - Project 2")
+model.save ("Initial Model - Project 2.keras")
