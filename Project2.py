@@ -65,7 +65,7 @@ Validation_generator = Validation_datagenerator.flow_from_directory (
 
 "Creating The Convolutional Base"
 
-model = models.Sequential ()
+model = models.Sequential()
 
 "Layer 1"
 model.add(layers.Input(shape = Img_shape))
@@ -80,10 +80,12 @@ from tensorflow.keras.layers import LeakyReLU
 model.add(layers.Conv2D(64, (3,3)))
 model.add(LeakyReLU(negative_slope = 0.01))
 model.add(layers.MaxPooling2D((2,2)))
+model.add(layers.Dropout(0.25))
 
 "Layer 3"
 model.add(layers.Conv2D(128, (3,3), activation = 'relu'))
 model.add(layers.MaxPooling2D((2,2)))
+model.add(layers.Dropout(0.3))
 
 "Flatten the Output from 3D to 1D"
 model.add(layers.Flatten())
@@ -91,6 +93,8 @@ model.add(layers.Flatten())
 "Dense Layers"
 model.add(layers.Dense(64, activation = 'relu'))
 model.add(layers.Dropout(0.5))
+
+"Output Dense Layer"
 model.add(layers.Dense(3, activation = 'softmax'))
 
 "STEP 3: Model Hyperparameter Analysis"
@@ -104,7 +108,7 @@ model.summary()
 "Model Training"
 model_trained = model.fit(
     Train_generator,
-    epochs = 15,
+    epochs = 25,
     validation_data = Validation_generator
     )
 
@@ -137,4 +141,4 @@ plt.legend()
 
 plt.show()
 
-model.save ("Initial Model - Project 2.keras")
+model.save ("Second Model - Project 2.keras")
