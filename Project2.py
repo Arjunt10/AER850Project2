@@ -14,12 +14,13 @@ AER850 - Project 2
 
 "Import Librarires"
 
-import pandas as pd
-import numpy as np
+# import pandas as pd
+# import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import matplotlib.pyplot as plt
 
 "Define Input Image Shape"
 Img_width = 500
@@ -67,16 +68,17 @@ Validation_generator = Validation_datagenerator.flow_from_directory (
 model = models.Sequential ()
 
 "Layer 1"
-model.add(layers.Conv2D(32, (3,3), activation = 'relu', input_shape = Img_shape))
+model.add(layers.Input(shape = Img_shape))
+model.add(layers.Conv2D(32, (3,3), activation = 'relu'))
 model.add(layers.MaxPooling2D((2,2)))
 
 "Layer 2"
 
 "Need to import LeakyRelu"
-from keras.layers import LeakyRelu
+from tensorflow.keras.layers import LeakyReLU
 
 model.add(layers.Conv2D(64, (3,3)))
-model.add(LeakyRelu(negative_slope = 0.01))
+model.add(LeakyReLU(negative_slope = 0.01))
 model.add(layers.MaxPooling2D((2,2)))
 
 "Layer 3"
@@ -88,7 +90,7 @@ model.add(layers.Flatten())
 
 "Dense Layers"
 model.add(layers.Dense(64, activation = 'relu'))
-model.add(layers.dropout(0.5))
+model.add(layers.Dropout(0.5))
 model.add(layers.Dense(3, activation = 'softmax'))
 
 "STEP 3: Model Hyperparameter Analysis"
@@ -99,7 +101,40 @@ model.compile(optimizer = 'adam', loss = "categorical_crossentropy", metrics = [
 "Model Summary"
 model.summary()
 
+"Model Training"
+model_trained = model.fit(
+    Train_generator,
+    epochs = 15,
+    validation_data = Validation_generator
+    )
+
+"STEP 4: Model Evaluation"
+valid_loss, valid_accuracy = model.evaluate(Validation_generator)
+
+accuracy = model_trained.history['accuracy']
+validation_accuracy = model_trained.history['valid_accuracy']
+loss = model_trained.history ['loss']
+validation_loss = model_trained.history ['valid_loss']
 
 
+"Plotting the Training vs Validation Accuracy Data"
+plt.figure(figsize = (12,4))
+plt.plot(accuracy, label = "Training Accuracy")
+plt.plot(validation_accuracy, label = "Validation Accuracy")
+plt.title ('Model Training and Validation Accuracy')
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+plt.legend()
 
+"Plotting the Training vs Validation Loss Data"
+plt.figure(figsize = (12,4))
+plt.plot(loss, label = "Training Loss")
+plt.plot(validation_loss, label = "Validation Loss")
+plt.title ('Model Training and Validation Loss')
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.legend()
 
+plt.show()
+
+model.save ("Initial Model - Project 2")
