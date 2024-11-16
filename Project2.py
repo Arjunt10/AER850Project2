@@ -90,6 +90,7 @@ model.add(layers.Dropout(0.3))
 "Layer 4"
 model.add(layers.Conv2D(256, (3,3), activation = 'relu'))
 model.add(layers.MaxPooling2D((2,2)))
+model.add(layers.Dropout(0.4))
 
 "Flatten the Output from 3D to 1D"
 model.add(layers.Flatten())
@@ -112,7 +113,7 @@ model.summary()
 "Model Training"
 model_trained = model.fit(
     Train_generator,
-    epochs = 30,
+    epochs = 60,
     validation_data = Validation_generator
     )
 
@@ -145,4 +146,4 @@ plt.legend()
 
 plt.show()
 
-model.save ("Second Model - Project 2.keras")
+model.save ("Third Model - Project 2.keras")
